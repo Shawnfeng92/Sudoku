@@ -20,5 +20,9 @@ for (i in 0:8) {
 temp <- c()
 
 for (i in 1:9) {
-  temp1 <- rep(0,729)
+  for (j in 1:9) {
+    temp1 <- 2:730
+    temp1[which((temp1<=(i*9))&(temp1>=(i-1)*9)&((temp1-1)%%9==j))] <- 1
+    temp <- cbind(temp, temp1)
+  }
 }
