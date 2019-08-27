@@ -16,3 +16,4 @@ for (i in 0:8) {
   temp <- cbind(temp, temp1)
 }
 
+# creat every line constraint
