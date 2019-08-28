@@ -17,8 +17,6 @@ for (i in 0:8) {
 }
 
 # creat every line constraint
-temp <- c()
-
 for (i in 1:9) {
   for (j in 1:9) {
     temp1 <- 2:730
