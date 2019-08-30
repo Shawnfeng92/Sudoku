@@ -16,7 +16,7 @@ for (i in 0:8) {
   temp <- cbind(temp, temp1)
 }
 
-# creat every line constraint
+# creat every line and column constraint
 for (i in 1:9) {
   for (j in 1:9) {
     temp1 <- 2:730
