@@ -16,7 +16,7 @@ for (i in 0:80) {
   temp <- cbind(temp, temp1)
 }
 
-# creat every line and column constraint
+# creat every line and column constraints
 for (i in 1:9) {
   for (j in 1:9) {
     temp1 <- 2:730
@@ -29,3 +29,5 @@ for (i in 1:9) {
     temp <- cbind(temp, temp1)
   }
 }
+
+# create every square constraint
