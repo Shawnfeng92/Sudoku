@@ -11,7 +11,7 @@ const.rhs <- rep(1, 729)
 
 # create every cell constraint
 temp <-c()
-for (i in 0:8) {
+for (i in 0:80) {
   temp1 <- c(rep(0,i*9), rep(1,9),rep(0,729-(i+1)*9))
   temp <- cbind(temp, temp1)
 }
