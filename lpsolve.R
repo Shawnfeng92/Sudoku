@@ -31,3 +31,8 @@ for (i in 1:9) {
 }
 
 # create every square constraint
+temp <-c()
+for (i in 0:8) {
+  temp1 <- c(rep(0,i*9), as.vector(diag(1, 9, 9)),rep(0,729-(i+1)*81))
+  temp <- cbind(temp, temp1)
+}
