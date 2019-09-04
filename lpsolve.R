@@ -35,3 +35,5 @@ for (i in 0:8) {
   temp1 <- c(rep(0,i*81), as.vector(diag(1, 9, 9)),rep(0,729-(i+1)*81))
   temp <- cbind(temp, temp1)
 }
+
+rm(i, j, temp1)
