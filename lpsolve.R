@@ -10,30 +10,30 @@ direction <- "min"
 const.rhs <- rep(1, 729)
 
 # create every cell constraint
-temp <-c()
+const.mat  <-c()
 for (i in 0:80) {
-  temp1 <- c(rep(0,i*9), rep(1,9),rep(0,729-(i+1)*9))
-  temp <- cbind(temp, temp1)
+  temp <- c(rep(0,i*9), rep(1,9),rep(0,729-(i+1)*9))
+  const.mat <- cbind(const.mat, temp)
 }
 
 # creat every line and column constraints
 for (i in 1:9) {
   for (j in 1:9) {
-    temp1 <- 2:730
-    temp1[which((temp1<=(i*81))&(temp1>=(i-1)*81)&((temp1-1)%%9==j))] <- 1
-    temp1[which(temp1 > 1)] <- 0
-    temp <- cbind(temp, temp1)
-    temp1 <- 2:730
-    temp1[which((temp1<=(j*81))&(temp1>=(j-1)*81)&((temp1-1)%%9==i))] <- 1
-    temp1[which(temp1 > 1)] <- 0
-    temp <- cbind(temp, temp1)
+    temp <- 2:730
+    temp[which((temp<=(i*81))&(temp>=(i-1)*81)&((temp-1)%%9==j))] <- 1
+    temp[which(temp > 1)] <- 0
+    const.mat  <- cbind(const.mat, temp)
+    temp <- 2:730
+    temp[which((temp<=(j*81))&(temp>=(j-1)*81)&((temp-1)%%9==i))] <- 1
+    temp[which(temp > 1)] <- 0
+    const.mat  <- cbind(const.mat, temp)
   }
 }
 
 # create every square constraint
 for (i in 0:8) {
-  temp1 <- c(rep(0,i*81), as.vector(diag(1, 9, 9)),rep(0,729-(i+1)*81))
-  temp <- cbind(temp, temp1)
+  temp <- c(rep(0,i*81), as.vector(diag(1, 9, 9)),rep(0,729-(i+1)*81))
+  const.mat <- cbind(const.mat, temp)
 }
 
-rm(i, j, temp1)
+rm(i, j, temp)
