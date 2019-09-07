@@ -39,9 +39,7 @@ for (i in 0:8) {
 rm(i, j, temp)
 
 # create direction
-
+const.dir <- rep("==", ncol(const.mat))
 
 result <- lp (direction, objective.in, const.mat, const.dir, const.rhs,
-              transpose.constraints = TRUE, int.vec, presolve=0, compute.sens=0,
-              binary.vec, all.int=FALSE, all.bin=FALSE, scale = 196, dense.const,
-              num.bin.solns=1, use.rw=FALSE)
+              all.int=TRUE, all.bin=TRUE)
