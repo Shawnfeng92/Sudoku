@@ -6,9 +6,6 @@ puzzle <- read.csv(file = "Puzzle.csv", header = FALSE)
 objective.in <- rep(1, 729)
 direction <- "min"
 
-# create a rhs vector
-const.rhs <- rep(1, 729)
-
 # create every cell constraint
 const.mat  <-c()
 for (i in 0:80) {
@@ -40,6 +37,9 @@ rm(i, j, temp)
 
 # create direction
 const.dir <- rep("==", ncol(const.mat))
+
+# create a rhs vector
+const.rhs <- rep(1, ncol(const.mat))
 
 result <- lp (direction, objective.in, const.mat, const.dir, const.rhs,
               transpose.constraints = 1, all.int=TRUE, all.bin=TRUE)
