@@ -42,4 +42,4 @@ rm(i, j, temp)
 const.dir <- rep("==", ncol(const.mat))
 
 result <- lp (direction, objective.in, const.mat, const.dir, const.rhs,
-              all.int=TRUE, all.bin=TRUE)
+              transpose.constraints = 1, all.int=TRUE, all.bin=TRUE)
