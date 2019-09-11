@@ -23,6 +23,14 @@ for (i in 1:9) {
   }
 }
 
+# creat every column constraints
+temp0 <- c()
+temp1 <- diag(1,81,81)
+for (i in 1:9) {
+  temp0 <- rbind(temp0, temp1)
+}
+const.mat <- cbind(temp0)
+
 # create every square constraint
 for (i in 0:8) {
   temp <- c(rep(0,i*81), as.vector(diag(1, 9, 9)),rep(0,729-(i+1)*81))
