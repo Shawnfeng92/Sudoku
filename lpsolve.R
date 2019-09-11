@@ -13,11 +13,11 @@ for (i in 0:80) {
   const.mat <- cbind(const.mat, temp)
 }
 
-# creat every row and column constraints
+# creat every row constraints
 for (i in 1:9) {
-  for (j in 1:9) {
+  for (j in c(1:8,0)) {
     temp <- 2:730
-    temp[which((temp<=(i*81))&(temp>=(i-1)*81)&((temp-1)%%9==j))] <- 1
+    temp[which(((temp-1)<=(i*81))&((temp-1)>(i-1)*81)&((temp-1)%%9==j))] <- 1
     temp[which(temp > 1)] <- 0
     const.mat  <- cbind(const.mat, temp)
   }
