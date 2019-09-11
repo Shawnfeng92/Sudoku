@@ -29,7 +29,7 @@ temp1 <- diag(1,81,81)
 for (i in 1:9) {
   temp0 <- rbind(temp0, temp1)
 }
-const.mat <- cbind(temp0)
+const.mat <- cbind(const.mat, temp0)
 
 # create every square constraint
 for (i in 0:8) {
