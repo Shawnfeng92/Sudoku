@@ -13,7 +13,7 @@ for (i in 0:80) {
   const.mat <- cbind(const.mat, temp)
 }
 
-# creat every line and column constraints
+# creat every row and column constraints
 for (i in 1:9) {
   for (j in 1:9) {
     temp <- 2:730
