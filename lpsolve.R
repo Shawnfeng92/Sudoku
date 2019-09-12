@@ -24,12 +24,11 @@ for (i in 1:9) {
 }
 
 # creat every column constraints
-temp0 <- c()
-temp1 <- diag(1,81,81)
+temp <- c()
 for (i in 1:9) {
-  temp0 <- rbind(temp0, temp1)
+  temp <- rbind(temp, diag(1,81,81))
 }
-const.mat <- cbind(const.mat, temp0)
+const.mat <- cbind(const.mat, temp)
 
 # create every square constraint
 for (i in 0:8) {
