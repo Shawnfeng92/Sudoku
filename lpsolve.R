@@ -42,8 +42,8 @@ for (i in 0:2) {
     for (k in c(1:8,0)) {
       temp <- rep(2, 729)
       temp[which(
-        (as.integer((1:729)/9) >= i*3) & (as.integer((1:729)/9) < (i+1)*3) &
-          (as.integer((1:729)/9) >= j*3) & (as.integer((1:729)/9) < (j+1)*3) &
+        (as.integer((1:729)/81) > i*3) & (as.integer((1:729)/81) <= (i+1)*3) &
+          (((1:729)/9)%%9 > j*3) & (((1:729)/9)%%9 <= (j+1)*3) &
           ((1:729)%%9 == k)
       )] <- 1
     }
@@ -52,12 +52,14 @@ for (i in 0:2) {
   }
 }
 
+# export constraint matrix to debug
+write.csv(const.mat, "try.csv", row.names = FALSE, col.names = FALSE)
+
 # create direction
 const.dir <- rep("==", ncol(const.mat))
 
 # create a rhs vector
 const.rhs <- rep(1, ncol(const.mat))
 
-result <- lp(direction, objective.in, const.mat, const.dir, const.rhs,
-              transpose.constraints = FALSE, all.int=TRUE, all.bin=TRUE)
-write.csv(const.mat, "try.csv")
+# result <- lp(direction, objective.in, const.mat, const.dir, const.rhs,
+#               transpose.constraints = FALSE, all.int=TRUE, all.bin=TRUE)
