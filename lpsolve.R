@@ -60,3 +60,4 @@ const.rhs <- rep(1, ncol(const.mat))
 
 result <- lp(direction, objective.in, const.mat, const.dir, const.rhs,
               transpose.constraints = FALSE, all.int=TRUE, all.bin=TRUE)
+write.csv(const.mat, "try.csv")
