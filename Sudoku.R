@@ -2,6 +2,7 @@ rm(list = ls())
 
 library(lpSolve)
 
+# Create index vectors
 colNumber <- c()
 rowNumber <- c()
 celNumber <- c()
