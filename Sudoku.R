@@ -23,6 +23,7 @@ for (i in 1:81) {
 
 const.mat<- c()
 
+# Add spuare constraints
 for (i in 0:2) {
   for (j in 0:2) {
     for (k in 1:9) {
