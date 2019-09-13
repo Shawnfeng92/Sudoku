@@ -37,6 +37,7 @@ for (i in 0:2) {
   }
 }
 
+# Add row constraints
 for (i in 1:9) {
   for (j in 1:9) {
     temp <- rep(2, 729)
@@ -46,6 +47,7 @@ for (i in 1:9) {
   }
 }
 
+# Add column constraints
 for (i in 1:9) {
   for (j in 1:9) {
     temp <- rep(2, 729)
@@ -55,6 +57,7 @@ for (i in 1:9) {
   }
 }
 
+# Read puzzle
 puzzle <- read.csv("Desktop/Sudoku/puzzle.csv", header = FALSE)
 
 for (i in 1:9) {
