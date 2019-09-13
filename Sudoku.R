@@ -80,9 +80,24 @@ const.mat <- cbind(const.mat, diag(1, 729, 729))
 # Release memory
 rm(i, j, k, temp, celNumber, colNumber, rowNumber)
 
+
 result <- lp(direction = "min", objective.in = rep(1, 729), const.mat = const.mat, 
              const.dir = c(rep("=", ncol(const.mat)-729), rep(">=", 729)), 
              const.rhs = c(rep(1, ncol(const.mat)-729), rep(0, 729)),
              all.int = TRUE, transpose.constraints = FALSE)
 
 result$solution
+
+# Write Puzzle
+reveal <- function(x = puzzle, file = "result.csv") {
+  print(x)
+  result <- matrix(NA, 9, 9)
+  for (i in 1:729) {
+    if (x[i] == 1) {
+      result[(i-1)%/%81+1,(i-1)%%81%/%9+1] <- (i-1) %% 9 + 1
+    }
+  }
+  return(result)
+}
+
+reveal(result$solution)
