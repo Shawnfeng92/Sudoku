@@ -70,9 +70,11 @@ for (i in 1:9) {
   }
 }
 
-rm(i, j, k, temp, celNumber, colNumber, rowNumber)
-
+# Add all non-negative constraints
 const.mat <- cbind(const.mat, diag(1, 729, 729))
+
+# Release memory
+rm(i, j, k, temp, celNumber, colNumber, rowNumber)
 
 result <- lp(direction = "min", objective.in = rep(1, 729), const.mat = const.mat, 
              const.dir = c(rep("=", ncol(const.mat)-729), rep(">=", 729)), 
