@@ -58,7 +58,11 @@ for (i in 1:9) {
 }
 
 # Read puzzle
-puzzle <- read.csv("Desktop/Sudoku/puzzle.csv", header = FALSE)
+system <- Sys.info()["sysname"]
+
+if (system == "Windows") {
+  puzzle <- read.csv("puzzle.csv", header = FALSE)
+}
 
 for (i in 1:9) {
   for (j in 1:9) {
