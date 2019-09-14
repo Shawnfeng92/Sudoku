@@ -86,7 +86,7 @@ const.mat <- cbind(const.mat, diag(1, 729, 729),diag(1, 729, 729))
 rm(i, j, k, temp, celNumber, colNumber, rowNumber)
 
 # output const.mat for debug
-write.csv(const.mat, "GitHub/Sudoku/debug.csv", row.names = FALSE)
+# write.csv(const.mat, "GitHub/Sudoku/debug.csv", row.names = FALSE)
 
 result <- lp(direction = "max", objective.in = rep(1, 729), const.mat = const.mat, 
              const.dir = c(rep("=", ncol(const.mat)-729*2), rep(">=", 729), rep("<=", 729)), 
