@@ -88,11 +88,11 @@ rm(i, j, k, temp, celNumber, colNumber, rowNumber)
 # output const.mat for debug
 # write.csv(const.mat, "GitHub/Sudoku/debug.csv", row.names = FALSE)
 
-result <- lp(direction = "max", objective.in = rep(1, 729), const.mat = const.mat, 
+system.time(result <- lp(direction = "max", objective.in = rep(1, 729), const.mat = const.mat, 
              const.dir = c(rep("=", ncol(const.mat)-729*2), rep(">=", 729), rep("<=", 729)), 
              const.rhs = c(rep(1, ncol(const.mat)-729*2), rep(0, 729), rep(1, 729)), 
              all.int = TRUE, transpose.constraints = FALSE)
-
+)
 # Write Puzzle
 reveal <- function(x = puzzle) {
   result <- matrix(NA, 9, 9)
