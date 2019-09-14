@@ -47,6 +47,11 @@ for (i in 1:9) {
   }
 }
 
+# Add one number per cell constraint
+for (i in 1:81) {
+  const.mat<- cbind(const.mat, c(rep(0, (i-1)*9), rep(1, 9), rep(0, 729-i*9)))
+}
+
 # Add column constraints
 for (i in 1:9) {
   for (j in 1:9) {
