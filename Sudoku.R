@@ -110,10 +110,7 @@ reveal <- function(x = puzzle) {
   print(result)
 }
 
-i <- 0
-
 while(!result$status){
-  reveal(result$solution)
   const.mat <- cbind(const.mat, result$solution)
   const.rhs <- c(const.rhs, 80)
   const.dir <- c(const.dir, "<=")
@@ -121,5 +118,4 @@ while(!result$status){
                const.mat = const.mat, const.dir = const.dir, 
                const.rhs = const.rhs, all.int = TRUE, 
                transpose.constraints = FALSE)
-  i <- i+1
 }
