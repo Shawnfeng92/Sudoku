@@ -65,11 +65,15 @@ for (i in 1:9) {
   }
 }
 
+# Add all non-negative constraints ----
+const.mat <- cbind(const.mat, diag(1, 729, 729),diag(1, 729, 729))
+
 # Output constraint matrix for future use ----
+if (system == "Windows") {
+  write.csv("GitHub/Sudoku/constraints.csv", header = FALSE)
+}
 
-
-# Read puzzle
-
+# Read puzzle ----
 
 if (system == "Windows") {
   puzzle <- read.csv("GitHub/Sudoku/puzzle.csv", header = FALSE)
@@ -85,15 +89,8 @@ for (i in 1:9) {
   }
 }
 
-# Add all non-negative constraints
-const.mat <- cbind(const.mat, diag(1, 729, 729),diag(1, 729, 729))
-
 # Release memory
 rm(i, j, k, temp, celNumber, colNumber, rowNumber)
-
-# Output const.mat for debug
-# write.csv(const.mat, "GitHub/Sudoku/debug.csv", row.names = FALSE)
-
 # Creat right hand vector
 const.rhs <- c(rep(1, ncol(const.mat)-729*2), rep(0, 729), rep(1, 729))
 
