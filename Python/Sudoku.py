@@ -1,11 +1,8 @@
 import pulp
 import numpy
-import csv
+import pandas
 
-puzzleFile = "C://Users//Shawn//Documents//GitHub//Sudoku//puzzle.csv"
-with open(puzzleFile, 'r') as f:
-    reader = csv.reader(f, delimiter=',')
-    # get all the rows as a list
-    data = list(reader)
-    # transform data into numpy array
-    data = numpy.array(data).astype(float)
+puzzle = pandas.read_csv("puzzle.csv", header = None)
+
+constraint = pandas.read_csv("constraints.csv", header = "infer")
+
