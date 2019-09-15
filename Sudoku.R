@@ -2,7 +2,10 @@ rm(list = ls())
 
 library(lpSolve)
 
-# Create index vectors
+# Multi-OS support ----
+system <- Sys.info()["sysname"]
+
+# Create index vectors ----
 colNumber <- c()
 rowNumber <- c()
 celNumber <- c()
@@ -22,8 +25,8 @@ for (i in 1:81) {
 }
 
 const.mat<- c()
-
-# Add spuare constraints
+ 
+# Add spuare constraints ----
 for (i in 0:2) {
   for (j in 0:2) {
     for (k in 1:9) {
@@ -37,7 +40,7 @@ for (i in 0:2) {
   }
 }
 
-# Add row constraints
+# Add row constraints ----
 for (i in 1:9) {
   for (j in 1:9) {
     temp <- rep(2, 729)
@@ -47,12 +50,12 @@ for (i in 1:9) {
   }
 }
 
-# Add one number per cell constraint
+# Add one number per cell constraint ----
 for (i in 1:81) {
   const.mat<- cbind(const.mat, c(rep(0, (i-1)*9), rep(1, 9), rep(0, 729-i*9)))
 }
 
-# Add column constraints
+# Add column constraints ----
 for (i in 1:9) {
   for (j in 1:9) {
     temp <- rep(2, 729)
@@ -62,8 +65,11 @@ for (i in 1:9) {
   }
 }
 
+# Output constraint matrix for future use ----
+
+
 # Read puzzle
-system <- Sys.info()["sysname"]
+
 
 if (system == "Windows") {
   puzzle <- read.csv("GitHub/Sudoku/puzzle.csv", header = FALSE)
