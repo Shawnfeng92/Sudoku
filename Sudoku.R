@@ -66,11 +66,11 @@ for (i in 1:9) {
 }
 
 # Add all non-negative constraints ----
-const.mat <- cbind(const.mat, diag(1, 729, 729),diag(1, 729, 729))
+const.mat <- cbind(const.mat, diag(1, 729, 729))
 
 # Output constraint matrix for future use ----
 if (system == "Windows") {
-  write.csv("GitHub/Sudoku/constraints.csv", row.names = FALSE)
+  write.csv(const.mat, "GitHub/Sudoku/constraints.csv", row.names = FALSE)
 }
 
 # Read puzzle ----
@@ -92,10 +92,10 @@ for (i in 1:9) {
 rm(i, j, k, temp, celNumber, colNumber, rowNumber)
 
 # Creat right hand vector ----
-const.rhs <- c(rep(1, ncol(const.mat)-729*2), rep(0, 729), rep(1, 729))
+const.rhs <- c(rep(1, 81*4), rep(0, 729), rep(1, sum(puzzle > 0, na.rm = TRUE)))
 
 # Creat direction ----
-const.dir <- c(rep("=", ncol(const.mat)-729*2), rep(">=", 729), rep("<=", 729))
+const.dir <- c(rep("=", 81*4), rep(">=", 729), rep("=", sum(puzzle > 0, na.rm = TRUE)))
 
 # Solve puzzle ----
 result <- lp(direction = "max", objective.in = rep(1, 729), const.mat = const.mat,
@@ -110,8 +110,9 @@ reveal <- function(x = puzzle) {
       result[(i-1)%/%81+1,(i-1)%%81%/%9+1] <- (i-1) %% 9 + 1
     }
   }
-  result
 }
+
+reveal(result$solution)
 
 # Find multiple solution ----
 while(!result$status){
