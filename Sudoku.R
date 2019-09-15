@@ -70,11 +70,10 @@ const.mat <- cbind(const.mat, diag(1, 729, 729),diag(1, 729, 729))
 
 # Output constraint matrix for future use ----
 if (system == "Windows") {
-  write.csv("GitHub/Sudoku/constraints.csv", header = FALSE)
+  write.csv("GitHub/Sudoku/constraints.csv", row.names = FALSE)
 }
 
 # Read puzzle ----
-
 if (system == "Windows") {
   puzzle <- read.csv("GitHub/Sudoku/puzzle.csv", header = FALSE)
 }
@@ -89,20 +88,21 @@ for (i in 1:9) {
   }
 }
 
-# Release memory
+# Release memory ----
 rm(i, j, k, temp, celNumber, colNumber, rowNumber)
-# Creat right hand vector
+
+# Creat right hand vector ----
 const.rhs <- c(rep(1, ncol(const.mat)-729*2), rep(0, 729), rep(1, 729))
 
-# Creat direction
+# Creat direction ----
 const.dir <- c(rep("=", ncol(const.mat)-729*2), rep(">=", 729), rep("<=", 729))
 
-runningTime <- system.time(result <- lp(direction = "max", 
-                                        objective.in = rep(1, 729), const.mat = const.mat,
-                                        const.dir = const.dir, const.rhs = const.rhs, 
-                                        all.int = TRUE, transpose.constraints = FALSE))
+# Solve puzzle ----
+result <- lp(direction = "max", objective.in = rep(1, 729), const.mat = const.mat,
+             const.dir = const.dir, const.rhs = const.rhs, 
+             all.int = TRUE, transpose.constraints = FALSE)
 
-# Write Puzzle
+# Reveal Puzzle ----
 reveal <- function(x = puzzle) {
   result <- matrix(NA, 9, 9)
   for (i in 1:729) {
@@ -110,9 +110,10 @@ reveal <- function(x = puzzle) {
       result[(i-1)%/%81+1,(i-1)%%81%/%9+1] <- (i-1) %% 9 + 1
     }
   }
-  print(result)
+  result
 }
 
+# Find multiple solution ----
 while(!result$status){
   const.mat <- cbind(const.mat, result$solution)
   const.rhs <- c(const.rhs, 80)
