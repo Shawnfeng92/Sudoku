@@ -18,11 +18,7 @@ for i in range(3):
     for j in range(3):
         if(not pandas.isna(puzzle.iloc[i,j])):
             sudoku += choices[i*81 + j*9 + puzzle.iloc[i,j] - 1] == 1, ""
-
-for i in range(729):
-    if(value(choices[i]) != 0):
-        result[i//81][i%81//9] = i % 9 + 1
-        
+            
 # The problem is solved using PuLP's choice of Solver
 sudoku.solve()
 
@@ -35,3 +31,8 @@ while LpStatus[sudoku.status] == "Optimal":
         x[j] = value(choices[j])
     sudoku += sum(choices[j] * x[j] for j in range(729)) <= 80, ""
     sudoku.solve()
+
+for i in range(729):
+    if(value(choices[i]) != 0):
+        result[i//81][i%81//9] = i % 9 + 1
+        
