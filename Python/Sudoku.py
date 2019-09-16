@@ -10,4 +10,4 @@ choices = LpVariable.dicts("choices", list(range(729)), 0, 1, LpInteger)
 sudoku += 0, "Arbitrary Objective Function"
 
 for i in range(0,81*4):
-    sudoku += choices[0] * 1 == 1, ""
+    sudoku += sum(choices[0] * ([1]*729)) == 1, ""
