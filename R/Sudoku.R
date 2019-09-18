@@ -124,3 +124,4 @@ while(!result$status){
                const.rhs = const.rhs, all.int = TRUE, 
                transpose.constraints = FALSE)
 }
+
