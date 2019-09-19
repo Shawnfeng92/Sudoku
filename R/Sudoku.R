@@ -112,8 +112,6 @@ reveal <- function(x = puzzle) {
   }
 }
 
-reveal(result$solution)
-
 # Find multiple solution ----
 while(!result$status){
   const.mat <- cbind(const.mat, result$solution)
