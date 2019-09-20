@@ -5,6 +5,42 @@ library(lpSolve)
 # Multi-OS support ----
 system <- Sys.info()["sysname"]
 
+# Read Puzzle ----
+puzzleToVector <- function(x) {
+  for (i in 1:9) {
+    for (j in 1:9) {
+      if (!is.na(puzzle[i,j])) {
+        temp <- rep(0,729)
+        temp[(i-1)*81 + (j-1)*9 + puzzle[i,j]] <- 1
+        const.mat<- cbind(const.mat, temp)
+      }
+    }
+  }
+}
+
+# Reveal Puzzle ----
+reveal <- function(x = puzzle) {
+  result <- matrix(NA, 9, 9)
+  for (i in 1:729) {
+    if (x[i] == 1) {
+      result[(i-1)%/%81+1,(i-1)%%81%/%9+1] <- (i-1) %% 9 + 1
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Create index vectors ----
 colNumber <- c()
 rowNumber <- c()
@@ -102,15 +138,7 @@ result <- lp(direction = "max", objective.in = rep(1, 729), const.mat = const.ma
              const.dir = const.dir, const.rhs = const.rhs, 
              all.int = TRUE, transpose.constraints = FALSE)
 
-# Reveal Puzzle ----
-reveal <- function(x = puzzle) {
-  result <- matrix(NA, 9, 9)
-  for (i in 1:729) {
-    if (x[i] == 1) {
-      result[(i-1)%/%81+1,(i-1)%%81%/%9+1] <- (i-1) %% 9 + 1
-    }
-  }
-}
+
 
 # Find multiple solution ----
 while(!result$status){
