@@ -118,14 +118,15 @@ creatCMatrix <- function(x, output = FALSE){
 # Solver Function ----
 puzzleSolve <- function(x, solution = "one")
 {
+  # Creat constraint matrix ----
+  const.mat <- creatCMatrix(x)
+  
   # Creat right hand vector ----
   const.rhs <- c(rep(1, 81*4), rep(0, 729), rep(1, sum(puzzle > 0, na.rm = TRUE)))
   
   # Creat direction ----
   const.dir <- c(rep("=", 81*4), rep(">=", 729), rep("=", sum(puzzle > 0, na.rm = TRUE)))
   
-  # Creat constraint matrix ----
-  const.mat <- c(rep("=", 81*4), rep(">=", 729), rep("=", sum(puzzle > 0, na.rm = TRUE)))
   
   
   # Solve puzzle ----
