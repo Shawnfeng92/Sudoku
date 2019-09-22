@@ -7,7 +7,15 @@ system <- Sys.info()["sysname"]
 
 # Read Puzzle ----
 puzzleToVector <- function(x) {
-  puzzle <- read.csv(x, header = FALSE)
+  # Read puzzle ----
+  puzzle <- try(read.csv(x, header = FALSE))
+  
+  # Verify puzzle valid or not ----
+  if (class(puzzle) == "try-error") {
+    return("No puzzle found.")
+  }
+  
+  # Transforming ----
   result <- c()
   for (i in 1:9) {
     for (j in 1:9) {
@@ -18,10 +26,12 @@ puzzleToVector <- function(x) {
       }
     }
   }
+  
+  # Finished ----
   return(result)
 }
 
-# Reveal Puzzle ----
+# Reveal puzzle ----
 vectorToPuzzle <- function(x) {
   result <- matrix(NA, 9, 9)
   for (i in 1:729) {
@@ -32,10 +42,13 @@ vectorToPuzzle <- function(x) {
   return(result)
 }
 
-# Create Full Constraint Matrix
+# Create full constraint matrix ----
 creatCMatrix <- function(x, output = FALSE){
-  # Create Result Matrix ----
-  const.mat<- puzzleToVector(x)
+  # Create result matrix ----
+  const.mat <- puzzleToVector(x)
+  if (const.mat == "No puzzle found.") {
+    stop("No puzzle found.")
+  }
   
   # Create index vectors ----
   colNumber <- c()
@@ -102,19 +115,25 @@ creatCMatrix <- function(x, output = FALSE){
   return(const.mat)
 }
 
-# Release memory ----
-rm(i, j, k, temp, celNumber, colNumber, rowNumber)
-
-# Creat right hand vector ----
-const.rhs <- c(rep(1, 81*4), rep(0, 729), rep(1, sum(puzzle > 0, na.rm = TRUE)))
-
-# Creat direction ----
-const.dir <- c(rep("=", 81*4), rep(">=", 729), rep("=", sum(puzzle > 0, na.rm = TRUE)))
-
-# Solve puzzle ----
-result <- lp(direction = "max", objective.in = rep(1, 729), const.mat = const.mat,
-             const.dir = const.dir, const.rhs = const.rhs, 
-             all.int = TRUE, transpose.constraints = FALSE)
+# Solver Function ----
+puzzleSolve <- function(x, solution = "one")
+{
+  # Creat right hand vector ----
+  const.rhs <- c(rep(1, 81*4), rep(0, 729), rep(1, sum(puzzle > 0, na.rm = TRUE)))
+  
+  # Creat direction ----
+  const.dir <- c(rep("=", 81*4), rep(">=", 729), rep("=", sum(puzzle > 0, na.rm = TRUE)))
+  
+  # Creat constraint matrix ----
+  const.mat <- c(rep("=", 81*4), rep(">=", 729), rep("=", sum(puzzle > 0, na.rm = TRUE)))
+  
+  
+  # Solve puzzle ----
+  result <- lp(direction = "max", objective.in = rep(1, 729), const.mat = const.mat,
+               const.dir = const.dir, const.rhs = const.rhs, 
+               all.int = TRUE, transpose.constraints = FALSE)
+  
+}
 
 
 
