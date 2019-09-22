@@ -34,6 +34,9 @@ vectorToPuzzle <- function(x) {
 
 # Create Full Constraint Matrix
 creatCMatrix <- function(x, output = FALSE){
+  # Create Result Matrix ----
+  const.mat<- puzzleToVector(x)
+  
   # Create index vectors ----
   colNumber <- c()
   rowNumber <- c()
@@ -52,9 +55,6 @@ creatCMatrix <- function(x, output = FALSE){
   for (i in 1:81) {
     celNumber <- c(celNumber, 1:9)
   }
-  
-  # Create Result Matrix ----
-  const.mat<- c()
   
   # Add spuare constraints ----
   for (i in 0:2) {
@@ -98,6 +98,8 @@ creatCMatrix <- function(x, output = FALSE){
   # Add all non-negative constraints ----
   const.mat <- cbind(const.mat, diag(1, 729, 729))
   
+  # Return Matrix ----
+  return(const.mat)
 }
 
 # Release memory ----
