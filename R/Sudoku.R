@@ -43,7 +43,7 @@ vectorToPuzzle <- function(x) {
 }
 
 # Create full constraint matrix ----
-creatCMatrix <- function(x, output = FALSE){
+creatCMatrix <- function(x, output = FALSE, name = "ConstraintMatrix.csv"){
   # Create result matrix ----
   const.mat <- puzzleToVector(x)
   if (const.mat == "No puzzle found.") {
@@ -111,6 +111,11 @@ creatCMatrix <- function(x, output = FALSE){
   # Add all non-negative constraints ----
   const.mat <- cbind(const.mat, diag(1, 729, 729))
   
+  # Output ----
+  if (output) {
+    write.csv(const.mat, file = name, row.names = FALSE, col.names = FALSE)
+  }
+  
   # Return Matrix ----
   return(const.mat)
 }
@@ -127,13 +132,10 @@ puzzleSolve <- function(x, solution = "one")
   # Creat direction ----
   const.dir <- c(rep("=", 81*4), rep(">=", 729), rep("=", sum(puzzle > 0, na.rm = TRUE)))
   
-  
-  
   # Solve puzzle ----
   result <- lp(direction = "max", objective.in = rep(1, 729), const.mat = const.mat,
                const.dir = const.dir, const.rhs = const.rhs, 
                all.int = TRUE, transpose.constraints = FALSE)
-  
 }
 
 
