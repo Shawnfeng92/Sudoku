@@ -136,18 +136,25 @@ puzzleSolve <- function(x, solution = "one")
   result <- lp(direction = "max", objective.in = rep(1, 729), const.mat = const.mat,
                const.dir = const.dir, const.rhs = const.rhs, 
                all.int = TRUE, transpose.constraints = FALSE)
+  
+  # No solution ----
+  if (result$status) {
+    stop("This puzzle Can not be solved.")
+  }
+  # One Solution ----
+  if (solution = "one") {
+    return(result) 
+  } else {
+    numOfSolution <- 1
+    while(!result$status){
+      const.mat <- cbind(const.mat, result$solution)
+      const.rhs <- c(const.rhs, 80)
+      const.dir <- c(const.dir, "<=")
+      result <- lp(direction = "max", objective.in = rep(1, 729), 
+                   const.mat = const.mat, const.dir = const.dir, 
+                   const.rhs = const.rhs, all.int = TRUE, 
+                   transpose.constraints = FALSE)
+    }
+    }
+  }
 }
-
-
-
-# Find multiple solution ----
-while(!result$status){
-  const.mat <- cbind(const.mat, result$solution)
-  const.rhs <- c(const.rhs, 80)
-  const.dir <- c(const.dir, "<=")
-  result <- lp(direction = "max", objective.in = rep(1, 729), 
-               const.mat = const.mat, const.dir = const.dir, 
-               const.rhs = const.rhs, all.int = TRUE, 
-               transpose.constraints = FALSE)
-}
-
