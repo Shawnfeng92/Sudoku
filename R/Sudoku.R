@@ -145,8 +145,9 @@ puzzleSolve <- function(x, solution = "one")
   if (solution = "one") {
     return(result) 
   } else {
-    numOfSolution <- 1
-    while(!result$status){
+    setOfSultions <- c()
+    while(!result$status & (nrow(setOfSultions) < 100)){
+      setOfSolutions <- rbind(setOfSolutions, result$solution)
       const.mat <- cbind(const.mat, result$solution)
       const.rhs <- c(const.rhs, 80)
       const.dir <- c(const.dir, "<=")
@@ -155,6 +156,6 @@ puzzleSolve <- function(x, solution = "one")
                    const.rhs = const.rhs, all.int = TRUE, 
                    transpose.constraints = FALSE)
     }
-    }
+    return(setOfSultions)
   }
 }
