@@ -1,5 +1,3 @@
-rm(list = ls())
-
 library(lpSolve)
 
 # Multi-OS support ----
@@ -22,7 +20,7 @@ puzzleToVector <- function(x) {
       if (!is.na(puzzle[i,j])) {
         temp <- rep(0,729)
         temp[(i-1)*81 + (j-1)*9 + puzzle[i,j]] <- 1
-        const.mat<- cbind(const.mat, temp)
+        result<- cbind(result, temp)
       }
     }
   }
@@ -121,8 +119,7 @@ creatCMatrix <- function(x, output = FALSE, name = "ConstraintMatrix.csv"){
 }
 
 # Solver Function ----
-puzzleSolve <- function(x, solution = "one")
-{
+puzzleSolve <- function(x, solution = "one") {
   # Creat constraint matrix ----
   const.mat <- creatCMatrix(x)
   
@@ -142,7 +139,7 @@ puzzleSolve <- function(x, solution = "one")
     stop("This puzzle Can not be solved.")
   }
   # One Solution ----
-  if (solution = "one") {
+  if (solution == "one") {
     return(result) 
   } else {
     setOfSultions <- c()
@@ -159,3 +156,5 @@ puzzleSolve <- function(x, solution = "one")
     return(setOfSultions)
   }
 }
+
+puzzleSolve(x = "~/GitHub/Sudoku/puzzle.csv")
