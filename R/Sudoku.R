@@ -44,7 +44,7 @@ vectorToPuzzle <- function(x) {
 creatCMatrix <- function(x, output = FALSE, name = "ConstraintMatrix.csv"){
   # Create result matrix ----
   const.mat <- puzzleToVector(x)
-  if (const.mat == "No puzzle found.") {
+  if (const.mat[1] == "No puzzle found.") {
     stop("No puzzle found.")
   }
   
@@ -119,15 +119,15 @@ creatCMatrix <- function(x, output = FALSE, name = "ConstraintMatrix.csv"){
 }
 
 # Solver Function ----
-puzzleSolve <- function(x, solution = "one") {
+puzzleSolve <- function(x = "~/GitHub/Sudoku/puzzle.csv", nSolution = 1) {
   # Creat constraint matrix ----
   const.mat <- creatCMatrix(x)
   
   # Creat right hand vector ----
-  const.rhs <- c(rep(1, 81*4), rep(0, 729), rep(1, sum(puzzle > 0, na.rm = TRUE)))
+  const.rhs <- c(rep(1, ncol(const.mat) - 729), rep(0, 729))
   
   # Creat direction ----
-  const.dir <- c(rep("=", 81*4), rep(">=", 729), rep("=", sum(puzzle > 0, na.rm = TRUE)))
+  const.dir <- c(rep("=", ncol(const.mat) - 729), rep(">=", 729))
   
   # Solve puzzle ----
   result <- lp(direction = "max", objective.in = rep(1, 729), const.mat = const.mat,
@@ -139,11 +139,12 @@ puzzleSolve <- function(x, solution = "one") {
     stop("This puzzle Can not be solved.")
   }
   # One Solution ----
-  if (solution == "one") {
-    return(result) 
+  if (nSolution == 1) {
+    return(result$solution) 
   } else {
-    setOfSultions <- c()
-    while(!result$status & (nrow(setOfSultions) < 100)){
+    setOfSolutions <- c()
+    nsol <- 1
+    while((!result$status) & (nsol < nSolution)){
       setOfSolutions <- rbind(setOfSolutions, result$solution)
       const.mat <- cbind(const.mat, result$solution)
       const.rhs <- c(const.rhs, 80)
@@ -152,9 +153,14 @@ puzzleSolve <- function(x, solution = "one") {
                    const.mat = const.mat, const.dir = const.dir, 
                    const.rhs = const.rhs, all.int = TRUE, 
                    transpose.constraints = FALSE)
+      nsol <- nsol +1
     }
-    return(setOfSultions)
+    return(setOfSolutions)
   }
 }
 
-puzzleSolve(x = "~/GitHub/Sudoku/puzzle.csv")
+# Sample of one solution
+vectorToPuzzle(puzzleSolve(x = "~/GitHub/Sudoku/puzzle.csv"))
+
+# Sample of multiple solution
+vectorToPuzzle(puzzleSolve(x = "~/GitHub/Sudoku/puzzle.csv", nSolution = 5)[2,])
