@@ -1,8 +1,5 @@
 library(lpSolve)
 
-# Multi-OS support ----
-system <- Sys.info()["sysname"]
-
 # Read Puzzle ----
 puzzleToVector <- function(x) {
   # Read puzzle ----
