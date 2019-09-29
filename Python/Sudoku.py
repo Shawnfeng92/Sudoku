@@ -1,6 +1,48 @@
-from pulp import *
-import pandas
-import numpy
+import pulp as lp
+import pandas as pd
+import numpy as np
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 constraint = pandas.read_csv("constraints.csv", header = "infer")
 
