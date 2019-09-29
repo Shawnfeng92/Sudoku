@@ -17,7 +17,7 @@ puzzleToVector <- function(x) {
       if (!is.na(puzzle[i,j])) {
         temp <- rep(0,729)
         temp[(i-1)*81 + (j-1)*9 + puzzle[i,j]] <- 1
-        result<- cbind(result, temp)
+        result <- cbind(result, temp)
       }
     }
   }
