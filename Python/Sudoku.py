@@ -2,6 +2,46 @@ import pulp as lp
 import pandas as pd
 import numpy as np
 
+def puzzleToVector(x):
+    # Read puzzle
+    puzzle = pd.read_csv(x, header = "infer")
+  
+    # Transforming
+    result = np.zeros(729)
+    for i in range(9):
+        for j in range(9):
+            if (not pd.isna(puzzle.iloc[i,j])) :
+                temp = np.zeros(729)
+                temp[i*81 + j*9 + puzzle[i,j]] = 1
+                result = np.vstack((result, temp))
+  
+    # Finished
+    return(result[1:-1][:])
+
+def vectorToPuzzle(x):
+    result = np.zeros(shape=(3,3))
+    for i in range(729):
+        if(x[i] != 0):
+            result[i//81][i%81//9] = i % 9 + 1
+    return(result)
+    
+def createCMatrix(x, output = False, name = "ConstraintMatrix.csv"):
+    # Create result matrix
+    cMatrix = puzzleToVector(x)
+    
+    rowNumber = np.array([1])
+    colNumber = np.array([1])
+    celNumber = np.array([1])
+    
+    for i in range(9):
+        rowNumber = np.hstack((rowNumber, np.ones(81) * (i+1)))
+        
+    for i in range(9):
+        for j in range(9):
+            colNumber = np.hstack((colNumber, np.ones(9) * (j+1)))
+    
+    for i in range(81):
+        celNumber = np.hstack((celNumber, np.arange(1,10,1)))
 
 
 
@@ -40,13 +80,9 @@ import numpy as np
 
 
 
+constraint = pd.read_csv("constraints.csv", header = "infer")
 
-
-
-
-constraint = pandas.read_csv("constraints.csv", header = "infer")
-
-puzzle = pandas.read_csv("puzzle.csv", header = None)
+puzzle = pd.read_csv("puzzle.csv", header = None)
 
 sudoku = LpProblem("the sudoku problem", pulp.LpMinimize)
 choices = LpVariable.dicts("choices", list(range(729)), 0, 1, LpInteger)
